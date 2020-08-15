@@ -1,5 +1,5 @@
 # Data Science Customer Annual Salary Estimator: Project Overview
-* Created a tool that estimates data science customer annual salary (Accuracy 96\%) to help companies segment customers into income brackets.
+* Created a tool that estimates data science customer annual salary (RSE 0.96) to help companies segment customers into income brackets.
 * Engineered features: handling outliers, normalization, categorical encodings, feature generation, scaling, extracting date.
 * Optimized Linear Regression, Decision Tree, and Random Forest tuning parameters to reach the best model.
 
@@ -29,24 +29,25 @@ Average Transaction Volumn by weekday:
 Customers' location:  
 ![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/customer_map.png)  
 Correlation with other features:  
- 
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_5_1.png)
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_7_1.png)
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_8_1.png)  
+According to the above scatter plots, we can see age, the amount of purchase monthly, and ratio of purchase have correlation with Salary. 
 
 ## Model Building
-First, I normalized the data. I also split the data into train and tests sets with a test size of 20%.  
-I tried three different models and evaluated them using Mean Absolute Error. I chose MAE because it is relatively easy to interpret and outliers aren’t particularly bad in for this type of model.  
+First, I normalized and scaled the data. I also split the data into train and tests sets with a test size of 20%.  
+I tried three different models and evaluated them using R Square Error.  
 I tried three different models:  
 * **Linear Regression** - Baseline for the model
-* **Long Short-term Memory (LSTM)** - Because the history of oil price would affect current oil price, I thought a memorable model like long short-term memory would be effective.
-* **Prophet** - Again, with the time series data, I thought that this would be a good fit. Also, prophet can predict not only one period but more.   
+* **Decision Tree** - Because of the sparse data from the many categorical variables, I thought a decision tree model would be effective.
+* **Random Forest** - Again, with the sparse data, I thought that this would be a good fit. Also, random forest would be helpful when your model is complex, easy to overfit.   
 
 ## Model performance
-Depend on the trend of oil price in the future, investors decide the strategies of investment. Although the Linear Regression model far outperformed the other approaches on the test and validation sets, the Prophet model is more practical.
-* **Prophet:** MAE = 14.56   
-![alt text](https://github.com/ILing82816/ds_oil_price_proj/blob/master/Figure/prediction_prophet.png "prophet")   
-* **Linear Regression:** MAE = 0.82  
-![alt text](https://github.com/ILing82816/ds_oil_price_proj/blob/master/Figure/prediction_linear.png "linear")  
-* **Long Short-term Memory (LSTM):** MAE = 1.08  
-![alt text](https://github.com/ILing82816/ds_oil_price_proj/blob/master/Figure/prediction_LSTM.png "LSTM")
-
-## Productionization
-In this step, I built a flask API endpoint that was hosted on a local webserver by following along with the tutorial in the reference section above. The API endpoint takes in a request with the day of prediction and returns a list of estimated WTI Price.
+The Random Forest model far outperformed the other approaches on the test and validation sets.
+* **Random Forest:** RSE = 0.83   
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_38_1.png)   
+* **Linear Regression:** RSE = 0.80  
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_26_1.png)  
+* **Decision Tree:** RSE = 0.96  
+![alt text](https://github.com/ILing82816/ds_transaction_proj/blob/master/Figure/output_33_1.png)  
+It is perform better by using Random Forest model. Using the r square to evaluate the model, and getting 0.96. However, as we can seen, it is a little big overfitting. In my opinion, ANZ can identify the customers' income level by their ratio of purchase and the amount of purchase.
